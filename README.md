@@ -1,68 +1,197 @@
-# CodeIgniter 4 Application Starter
+# Simple Task Management System
 
-## What is CodeIgniter?
+## Introduction
 
-CodeIgniter is a PHP full-stack web framework that is light, fast, flexible and secure.
-More information can be found at the [official site](https://codeigniter.com).
+Welcome to the Simple Task Management System! This web application allows users to create, manage, and track tasks effectively. It provides a user-friendly interface for task creation, listing, viewing, editing, and deletion, along with user authentication to ensure data security.
 
-This repository holds a composer-installable app starter.
-It has been built from the
-[development repository](https://github.com/codeigniter4/CodeIgniter4).
+## Features
 
-More information about the plans for version 4 can be found in [CodeIgniter 4](https://forum.codeigniter.com/forumdisplay.php?fid=28) on the forums.
+1. **Task Creation:** Users can create new tasks by filling out a form with title, description, and due date fields.
+2. **Task List:** Display a paginated list of all tasks, showing title, due date, and status (e.g., "pending," "completed"), with AJAX support for seamless updates.
+3. **Task Details:** View detailed information about a specific task, including its description and due date.
+4. **Task Editing:** Allow users to edit existing tasks, updating the title, description, and due date as needed.
+5. **Task Deletion:** Provide a confirmation dialogue before allowing users to delete a task, ensuring data safety.
+6. **Task Status Update:** Users can mark tasks as completed or change their status to reflect progress.
+7. **User Authentication:** Implement a basic user authentication system to control access, ensuring that only authorized users can perform CRUD operations on tasks.
 
-You can read the [user guide](https://codeigniter.com/user_guide/)
-corresponding to the latest version of the framework.
+## Installation
 
-## Installation & updates
+1. Clone the repository to your local machine:
 
-`composer create-project codeigniter4/appstarter` then `composer update` whenever
-there is a new release of the framework.
+    ```
+    git clone https://github.com/loversjain/simple-task-management.git
+    ```
 
-When updating, check the release notes to see if there are any changes you might need to apply
-to your `app` folder. The affected files can be copied or merged from
-`vendor/codeigniter4/framework/app`.
+2. Navigate to the project directory:
 
-## Setup
+    ```
+    cd simple-task-management
+    ```
 
-Copy `env` to `.env` and tailor for your app, specifically the baseURL
-and any database settings.
+3. Install dependencies:
 
-## Important Change with index.php
+    ```
+    composer install
+    ```
 
-`index.php` is no longer in the root of the project! It has been moved inside the *public* folder,
-for better security and separation of components.
+4. Configure your environment variables and updating it with your database credentials:
 
-This means that you should configure your web server to "point" to your project's *public* folder, and
-not to the project root. A better practice would be to configure a virtual host to point there. A poor practice would be to point your web server to the project root and expect to enter *public/...*, as the rest of your logic and the
-framework are exposed.
+    ```
+    App/Config/database.php
+    public $default = [
+        'DSN'      => '',
+        'hostname' => 'localhost',
+        'username' => 'root',
+        'password' => '12345',
+        'database' => 'emp-pabbly',
+        'DBDriver' => 'MySQLi',
+        'DBPrefix' => '',
+        'pConnect' => false,
+        'DBDebug'  => (ENVIRONMENT !== 'development'),
+        'cacheOn'  => false,
+        'cacheDir' => '',
+        'charset'  => 'utf8',
+        'DBCollat' => 'utf8_general_ci',
+        'swapPre'  => '',
+        'encrypt'  => false,
+        'compress' => false,
+        'strictOn' => false,
+        'failover' => [],
+        'port'     => 3306,
+    ];
+    ```
 
-**Please** read the user guide for a better explanation of how CI4 works!
+5. Set up your database and update the database configuration in the `App/Config/database.php` file.
 
-## Repository Management
+6. Run the database migrations:
 
-We use GitHub issues, in our main repository, to track **BUGS** and to track approved **DEVELOPMENT** work packages.
-We use our [forum](http://forum.codeigniter.com) to provide SUPPORT and to discuss
-FEATURE REQUESTS.
+    ```
+    php spark migrate
+    ```
 
-This repository is a "distribution" one, built by our release preparation script.
-Problems with it can be raised on our forum, or as issues in the main repository.
+7. Serve the application:
 
-## Server Requirements
+    ```
+    php spark serve
+    ```
 
-PHP version 7.4 or higher is required, with the following extensions installed:
+8. Access your application at [http://localhost:8080](http://localhost:8080).
 
-- [intl](http://php.net/manual/en/intl.requirements.php)
-- [mbstring](http://php.net/manual/en/mbstring.installation.php)
+## Usage
 
-> [!WARNING]
-> The end of life date for PHP 7.4 was November 28, 2022.
-> The end of life date for PHP 8.0 was November 26, 2023.
-> If you are still using PHP 7.4 or 8.0, you should upgrade immediately.
-> The end of life date for PHP 8.1 will be November 25, 2024.
+1. Login (Admin/User) with existing credentials.
+2. Admin can Create, view, edit, delete and confirm tasks as per your requirements.
+3. User can Create, view, edit and delete tasks as per your requirements.
+4. Manage task statuses and due dates to stay organized.
+5. Logout when done to ensure data security.
 
-Additionally, make sure that the following extensions are enabled in your PHP:
+## Highlights
+1.  Use Repository Pattern
+2.  Use Enum
+3.  Use Admin Lte v3
+4.  Use Request File for validation rule
+5.  Use Datatables
+6.  Use Migrations
+7.  Use Cache
+8.  Use Filter(Middleware)
+9.  Use Ajax
 
-- json (enabled by default - don't turn it off)
-- [mysqlnd](http://php.net/manual/en/mysqlnd.install.php) if you plan to use MySQL
-- [libcurl](http://php.net/manual/en/curl.requirements.php) if you plan to use the HTTP\CURLRequest library
+
+
+## Routes
+
+### Admin Routes
+
+- **Admin Dashboard**: `/admin/admin-dashboard`
+  - Method: GET
+  - Controller Method: `Admin\AdminController::index`
+
+- **All Tasks**: `/admin/all-task`
+  - Method: GET
+  - Controller Method: `Admin\AdminController::getAllTask`
+
+- **Get Task Form**: `/admin/get-task`
+  - Method: GET
+  - Controller Method: `Admin\AdminController::getTaskForm`
+
+- **Store Task**: `/admin/store-task`
+  - Method: POST
+  - Controller Method: `Admin\AdminController::storeTask`
+
+- **Fetch Tasks**: `/admin/fetch`
+  - Method: POST
+  - Controller Method: `Admin\AdminController::fetchTasks`
+
+- **Delete Task**: `/admin/delete-task`
+  - Method: POST
+  - Controller Method: `Admin\AdminController::deleteTask`
+
+- **Edit Task**: `/admin/edit-task/{task_id}`
+  - Method: GET
+  - Controller Method: `Admin\AdminController::editTask`
+
+- **Update Task**: `/admin/update-task`
+  - Method: POST
+  - Controller Method: `Admin\AdminController::updateTask`
+
+- **Confirm Task**: `/admin/confirm-task`
+  - Method: POST
+  - Controller Method: `Admin\AdminController::confirmTask`
+
+### User Routes
+
+- **User Dashboard**: `/user/dashboard`
+  - Method: GET
+  - Controller Method: `User\UserController::index`
+
+- **All Tasks**: `/user/all-task`
+  - Method: GET
+  - Controller Method: `User\UserController::getAllTask`
+
+- **Get Task Form**: `/user/get-task`
+  - Method: GET
+  - Controller Method: `User\UserController::getTaskForm`
+
+- **Store Task**: `/user/store-task`
+  - Method: POST
+  - Controller Method: `User\UserController::storeTask`
+
+- **Fetch Tasks**: `/user/fetch`
+  - Method: POST
+  - Controller Method: `User\UserController::fetchTasks`
+
+- **Delete Task**: `/user/delete-task`
+  - Method: POST
+  - Controller Method: `User\UserController::deleteTask`
+
+- **Edit Task**: `/user/edit-task/{task_id}`
+  - Method: GET
+  - Controller Method: `User\UserController::editTask`
+
+- **Update Task**: `/user/update-task`
+  - Method: POST
+  - Controller Method: `User\UserController::updateTask`
+
+- **Confirm Task**: `/user/confirm-task`
+  - Method: POST
+  - Controller Method: `User\UserController::confirmTask`
+
+ 
+## Contributing
+
+Contributions are welcome! Please follow the guidelines for submitting bug reports, feature requests, or pull requests.
+
+## License
+
+This project is licensed under the [MIT License](LICENSE).
+
+## Credits
+
+- Built with [CodeIgniter 4](https://codeigniter.com).
+- Pagination and AJAX implemented using [CodeIgniter 4 Pagination Library](https://codeigniter.com/user_guide/libraries/pagination.html).
+- Authentication powered by [CodeIgniter 4 User Guide - Authentication](https://codeigniter.com/user_guide/libraries/auth.html).
+
+## Author
+
+[Lovers Jain](https://github.com/loversjain)
+
